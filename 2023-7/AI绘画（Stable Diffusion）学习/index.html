@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bcxiaojie.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="与其说是AI绘画，不如说是AI图片生成原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI绘画（Stable Diffusion）学习">
+<meta property="og:url" content="https://bcxiaojie.github.io/2023-7/AI%E7%BB%98%E7%94%BB%EF%BC%88Stable%20Diffusion%EF%BC%89%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="CJ&#39;s Blog">
+<meta property="og:description" content="与其说是AI绘画，不如说是AI图片生成原理">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-25T12:33:00.000Z">
+<meta property="article:modified_time" content="2023-08-16T03:15:05.081Z">
+<meta property="article:author" content="CJ">
+<meta property="article:tag" content="未完成">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Stable Diffusion">
+<meta property="article:tag" content="Easy Diffusion">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://bcxiaojie.github.io/2023-7/AI%E7%BB%98%E7%94%BB%EF%BC%88Stable%20Diffusion%EF%BC%89%E5%AD%A6%E4%B9%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://bcxiaojie.github.io/2023-7/AI%E7%BB%98%E7%94%BB%EF%BC%88Stable%20Diffusion%EF%BC%89%E5%AD%A6%E4%B9%A0/","path":"2023-7/AI绘画（Stable Diffusion）学习/","title":"AI绘画（Stable Diffusion）学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>AI绘画（Stable Diffusion）学习 | CJ's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CJ's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E8%AF%B4%E6%98%AFAI%E7%BB%98%E7%94%BB%EF%BC%8C%E4%B8%8D%E5%A6%82%E8%AF%B4%E6%98%AFAI%E5%9B%BE%E7%89%87%E7%94%9F%E6%88%90"><span class="nav-number">1.</span> <span class="nav-text">与其说是AI绘画，不如说是AI图片生成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Diffusion%E2%80%94%E2%80%94%E6%89%A9%E6%95%A3"><span class="nav-number">1.1.1.</span> <span class="nav-text">Diffusion——扩散</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Easy-Diffusion%EF%BC%88%E7%AE%80%E5%8D%95%E5%A5%BD%E4%B8%8A%E6%89%8B%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">Easy Diffusion（简单好上手）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stable-Diffusion%EF%BC%88%E7%94%A8%E7%9A%84-%E4%BA%BA%E5%A4%9A%EF%BC%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">Stable Diffusion（用的 人多）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="nav-number">1.3.</span> <span class="nav-text">提示词</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">CJ</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://bcxiaojie.github.io/2023-7/AI%E7%BB%98%E7%94%BB%EF%BC%88Stable%20Diffusion%EF%BC%89%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="CJ">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CJ's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="AI绘画（Stable Diffusion）学习 | CJ's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AI绘画（Stable Diffusion）学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-07-25 20:33:00" itemprop="dateCreated datePublished" datetime="2023-07-25T20:33:00+08:00">2023-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-16 11:15:05" itemprop="dateModified" datetime="2023-08-16T11:15:05+08:00">2023-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/%E8%BD%AF%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">软件</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/%E8%BD%AF%E4%BB%B6/AI%E7%BB%98%E7%94%BB/" itemprop="url" rel="index"><span itemprop="name">AI绘画</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="与其说是AI绘画，不如说是AI图片生成"><a href="#与其说是AI绘画，不如说是AI图片生成" class="headerlink" title="与其说是AI绘画，不如说是AI图片生成"></a>与其说是AI绘画，不如说是AI图片生成</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><h3 id="Diffusion——扩散"><a href="#Diffusion——扩散" class="headerlink" title="Diffusion——扩散"></a>Diffusion——扩散</h3><p>在AI绘画中，扩散原理是指通过在图像上应用随机噪声，然后使用一些算法将这些噪声逐渐扩散和平滑，最终形成画面的一种技术。这个过程可以通过以下简单的步骤来说明：</p>
+<ol>
+<li>随机噪声：首先，在一张空白的画布或现有的图像上，添加一些随机的噪声点。这些噪声点可以是随机的像素值或颜色。</li>
+<li>扩散算法：通过一些算法对这些噪声点进行处理，使它们逐渐向周围的像素进行扩散。这个过程可以使用邻域像素间的平均值或其他插值算法来实现。</li>
+<li>迭代过程：重复进行步骤2，多次迭代地将噪声点扩散到周围的像素，直到达到期望的效果。每个迭代步骤都会使噪声点逐渐模糊和平滑，从而形成更连续的图像。</li>
+</ol>
+<h2 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h2><h3 id="Easy-Diffusion（简单好上手）"><a href="#Easy-Diffusion（简单好上手）" class="headerlink" title="Easy Diffusion（简单好上手）"></a>Easy Diffusion（简单好上手）</h3><p>搜索Easy Diffusion找到GitHub链接并下载</p>
+<p>安装后即可进行使用</p>
+<h3 id="Stable-Diffusion（用的-人多）"><a href="#Stable-Diffusion（用的-人多）" class="headerlink" title="Stable Diffusion（用的 人多）"></a>Stable Diffusion（用的 人多）</h3><p>由于安装之后一直报错，貌似是对没有英伟达显卡的电脑不太兼容，就没有继续用下去了</p>
+<h2 id="提示词"><a href="#提示词" class="headerlink" title="提示词"></a>提示词</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%AA%E5%AE%8C%E6%88%90/" rel="tag"># 未完成</a>
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/Stable-Diffusion/" rel="tag"># Stable Diffusion</a>
+              <a href="/tags/Easy-Diffusion/" rel="tag"># Easy Diffusion</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023-7/Tkinter%E5%A4%87%E5%BF%98/" rel="prev" title="Tkinter备忘">
+                  <i class="fa fa-angle-left"></i> Tkinter备忘
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023-7/%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E5%A4%8D%E5%88%B6CSDN%E6%96%87%E7%AB%A0%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/" rel="next" title="如何正确复制CSDN文章到自己的博客">
+                  如何正确复制CSDN文章到自己的博客 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">CJ</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
