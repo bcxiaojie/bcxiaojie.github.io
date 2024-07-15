@@ -1,0 +1,48 @@
+/* body {
+    background-color: #171717;
+} */
+
+.container {
+    max-width: 800px !important;
+}
+
+.text-gray {
+    color: gray;
+}
+
+
+
+.navbar-brand {
+    font-size: 60px;
+    font-weight: bold;
+}
+
+a.row {
+    text-decoration: none !important;
+}
+
+a:hover.row .text-gray {
+    color: white;
+    transition: 0.5s;
+}
+
+a:not(hover) .text-gray {
+    transition: 0.5s;
+}
+
+.nav-link:hover {
+    color: white;
+    /* font-size: 16px !important; */
+}
+
+.nav-link {
+    font-size: 20px;
+}
+
+.border-bottom {
+    border-bottom-color: gray !important;
+}
+
+.nav-item {
+    margin-left: 20px;
+}

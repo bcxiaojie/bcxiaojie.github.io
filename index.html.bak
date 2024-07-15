@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CJ's Blog</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/custom.css" />
+</head>
+<body class="bg-dark">
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">CJ's Blog</a>
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button> -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav text-gray">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Explore</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container p-4">
+        <a href="#" class="row border-bottom py-2">
+            <div class="col-6 text-white fs-3">Article 1</div>
+            <div class="col-6 text-end text-gray fs-4">10:00 AM</div>
+        </a>
+        <a href="#" class="row border-bottom py-2">
+            <div class="col-6 text-white fs-3">Article 2</div>
+            <div class="col-6 text-end text-gray fs-4">11:30 AM</div>
+        </a>
+        <a href="#" class="row border-bottom py-2 ">
+            <div class="col-6 text-white fs-3">Article 3</div>
+            <div class="col-6 text-end text-gray fs-4">1:45 PM</div>
+        </a>
+    </div>
+    
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>
